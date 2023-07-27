@@ -10,7 +10,7 @@ public class Slider {
 
 	int x, w, y, h;
 	boolean vertical;
-	Color color;
+	Color c;
 	float value;
 	String dialogA;
 	float[] range = new float[2];
@@ -39,14 +39,14 @@ public class Slider {
 		this.value = value;
 	}
 
-	Slider(Window p, int x, int y, int w, int h, boolean vertical, Color color) {
+	Slider(Window p, int x, int y, int w, int h, boolean vertical, Color c) {
 		this.range = new float[] { 0, 1 };
 		this.parent = p;
 		this.x = x;
 		this.w = w - 1;
 		this.y = y;
 		this.h = h - 1;
-		this.color = color;
+		this.c = c;
 		this.vertical = vertical;
 	}
 
@@ -56,7 +56,7 @@ public class Slider {
 		parent.g.fillRect(x, y, w + 1, h + 1);
 		parent.g.setColor(Color.white);
 		parent.g.draw(new Rectangle(x, y, w + 1, h + 1));
-		parent.g.setColor(color);
+		parent.g.setColor(c);
 		if (vertical) {
 			parent.g.fillRect(x + 1, y + h - (int) (h * Math.min(value, 1)), w,
 					(int) (h * Math.min(value, 1)) + 1);

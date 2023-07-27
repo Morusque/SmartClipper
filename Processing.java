@@ -23,9 +23,9 @@ class Processing {
 			for (int i2 = 0; i2 < oneBarDuration; i2++) {
 				// checks if it's still in the bounds of the sample
 				if (start + i * oneBarDuration + i2 < parent.getSampleLength()) {
-					max[i][0] = Math.min((parent.streamSample((int) (start + i
+					max[i][0] = (float)Math.min((parent.streamSample((int) (start + i
 							* oneBarDuration + i2), left)), max[i][0]);
-					max[i][1] = Math.max((parent.streamSample((int) (start + i
+					max[i][1] = (float)Math.max((parent.streamSample((int) (start + i
 							* oneBarDuration + i2), left)), max[i][1]);
 				}
 			}
@@ -242,7 +242,7 @@ class Processing {
 		return cropArrays;
 	}
 
-	private static float constrain(float a, float b, float c) {
+	public static float constrain(float a, float b, float c) {
 		return Math.max(Math.min(a, c), b);
 	}
 
