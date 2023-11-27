@@ -68,6 +68,13 @@ public double[][] loadFile(String url) {
     }
 
     ais.close();
+
+    /*
+    println("nbChannels : "+nbChannels);
+     println("nSample : "+nSample[0].length);
+     println("bytePerSample : "+bytePerSample);
+     println("audioData.length : "+audioData.length);
+     */
   }
   catch (Exception e) {
     println(e);
@@ -91,12 +98,14 @@ public void exportSample(double[][] nSampleProcessed, String url) {
     int totalSize = audioDataLength * nbChannels * bytePerSample;
     // Allocate the byteData array with the total size
     byte[] byteData = new byte[totalSize];
+    println(byteData.length);
+    println("---");
 
     // For each sample index i
     for (int i = 0; i < nSampleProcessed[0].length; i++) {
       // For each channel c
       for (int c = 0; c < nbChannels; c++) {
-        int sampleAsInt = (int)(nSampleProcessed[c][i] * maxSampleValue);
+        int sampleAsInt = (int)(nSampleProcessed[nbChannels-c-1][i] * maxSampleValue);// swap channels to fix a problem but not sure where the problem comes from
 
         byte[] sampleBytes;
         switch (bytePerSample) {
@@ -123,10 +132,11 @@ public void exportSample(double[][] nSampleProcessed, String url) {
         System.arraycopy(sampleBytes, 0, byteData, byteDataIndex, bytePerSample);
       }
     }
-
+    
     // Create a new AudioInputStream from the byte data
     ByteArrayInputStream bais = new ByteArrayInputStream(byteData);
-    AudioInputStream outputAis = new AudioInputStream(bais, format, audioDataLength / format.getFrameSize());
+    // AudioInputStream outputAis = new AudioInputStream(bais, format, audioDataLength / format.getFrameSize()); // old incorrect line
+    AudioInputStream outputAis = new AudioInputStream(bais, format, totalSize);
 
     // Write the AudioInputStream to a file
     AudioSystem.write(outputAis, AudioFileFormat.Type.WAVE, new File(url));
