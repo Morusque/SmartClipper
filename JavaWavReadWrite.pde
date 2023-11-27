@@ -105,7 +105,7 @@ public void exportSample(double[][] nSampleProcessed, String url) {
     for (int i = 0; i < nSampleProcessed[0].length; i++) {
       // For each channel c
       for (int c = 0; c < nbChannels; c++) {
-        int sampleAsInt = (int)(nSampleProcessed[nbChannels-c-1][i] * maxSampleValue);// swap channels to fix a problem but not sure where the problem comes from
+        int sampleAsInt = (int)(nSampleProcessed[nbChannels-c-1][i] * maxSampleValue);// swap channels to fix a problem, not sure where the problem comes from
 
         byte[] sampleBytes;
         switch (bytePerSample) {
